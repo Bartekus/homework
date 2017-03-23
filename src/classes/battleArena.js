@@ -1,11 +1,11 @@
 import Autobot from './autobot';
 import Decepticon from './decepticon';
 
-Array.prototype.hasMin = function(attribute) {
-  return this.reduce(function(prev, curr){
-    return curr[attribute] < prev[attribute] ? prev : curr;
-  });
-};
+// Array.prototype.hasMin = function(attribute) {
+//   return this.reduce(function(prev, curr){
+//     return curr[attribute] < prev[attribute] ? prev : curr;
+//   });
+// };
 
 Array.prototype.hasMax = function(attribute) {
   return this.reduce(function(curr, prev){
@@ -71,23 +71,42 @@ export default class BattleArena {
     const contenders = obj;
     let transformerType;
 
+    console.log('contenders', contenders, typeof contenders);
+
+
     // Probably shouldnt be doing unfiltered for ...in
     // TODO: Add hasOwnProperty guard/check
     // But I like named object so for now it will do...
-    for (let allegiance in contenders) {
-      transformerType = contenders[allegiance].constructor.name;
+    // for (let allegiance in contenders) {
+    //   transformerType = contenders[allegiance].constructor.name;
+    //
+    //   if (transformerType === 'Autobot') {
+    //     autobots.push(contenders[allegiance]);
+    //   } else if (transformerType === 'Decepticon') {
+    //     decepticons.push(contenders[allegiance]);
+    //   }
+    // }
 
-      if (transformerType === 'Autobot') {
-        autobots.push(contenders[allegiance]);
-      } else if (transformerType === 'Decepticon') {
-        decepticons.push(contenders[allegiance]);
+    contenders.forEach(transformer => {
+      if (transformer.group === 'A') {
+        autobots.push(transformer);
+      } else if (transformer.group === 'D') {
+        decepticons.push(transformer);
       }
-    }
+    });
+
+
+    console.log('autobots', autobots);
+    console.log('decepticons', decepticons);
 
     autobotFighter = BattleArena.returnTheBest(autobots);
+
+    console.log('autobotFighter', autobotFighter);
     autobots = this.removeFromTeam(autobotFighter.name, autobots);
 
     decepticonFighter = BattleArena.returnTheBest(decepticons);
+
+    console.log('decepticonFighter', decepticonFighter);
     decepticons = this.removeFromTeam(decepticonFighter.name, decepticons);
 
     return {
@@ -216,9 +235,9 @@ export default class BattleArena {
     let skill        = arr[9];
 
     if (group === 'A') {
-      let autobot = {};
+      let autobot = [];
 
-      autobot[name] = new Autobot({
+      return new Autobot({
         name: name,
         group: group,
         strength: strength,
@@ -231,12 +250,12 @@ export default class BattleArena {
         skill: skill
       });
 
-      return autobot;
+      // return autobot;
 
     } else if ( group === 'D' ) {
-      let decepticon = {};
+      let decepticon = [];
 
-      decepticon[name] = new Decepticon({
+      return new Decepticon({
         name: name,
         group: group,
         strength: strength,
@@ -249,7 +268,7 @@ export default class BattleArena {
         skill: skill
       });
 
-      return decepticon;
+      // return decepticon;
     }
   }
 
