@@ -4,7 +4,7 @@
   "description": "aequilibrium",
   "main": "src/index.js",
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rimraf build",
     "build": "NODE_ENV=production npm run clean && webpack -p",
     "start": "webpack-dev-server"
   },
