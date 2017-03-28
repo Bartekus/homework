@@ -5,14 +5,11 @@ export default class Combat {
     const contenders = [];
 
     this._contenders = data;
-    // this._contenders.forEach((transformer) => {
-    //   Object.assign(contenders, BattleArena.createTransformer(transformer));
-    // });
     this._contenders.forEach((transformer) => {
-      contenders.push(BattleArena.createTransformer(transformer));
+      Object.assign(contenders, BattleArena.createTransformer(transformer));
     });
 
-    BattleArena.engage(BattleArena.getFighters(contenders));
+    BattleArena.lobby(contenders);
   }
 
 }
